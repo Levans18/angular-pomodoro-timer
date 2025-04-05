@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { TimerComponent } from "./components/timer/timer.component";
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [TimerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
