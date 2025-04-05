@@ -1,59 +1,81 @@
-# AngularPomodoroTimer
+# ⏳ Angular Pomodoro Timer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+A stylish and customizable Pomodoro Timer built with Angular. Includes support for multiple themes (Pixel & Clean), task tracking, auto-switching between focus/break sessions, and history saved to `localStorage`.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Features
+
+- ⏱️ Start, pause, and reset the timer
+- 🎯 Custom task names for each session (coming soon)
+- 🔁 Automatic switching between focus and break cycles (coming soon)
+- 🎨 Theme support (Pixel Retro & Clean Light) (coming soon)
+- 💾 Saves session history and settings to localStorage (coming soon)
+- 🔔 Optional sound alerts and visual feedback (coming soon)
+
+## 📁 Project Structure
+
+```
+src/app/
+├── components/
+│   ├── timer/            # Timer UI and logic
+│   ├── settings/         # Theme and duration settings *To Do*
+│   └── history/          # Completed Pomodoro history *To Do*
+├── services/
+│   ├── timer.service.ts  # Timer state and logic
+│   └── theme.service.ts  # Theme switching logic
+├── models/
+│   └── pomodoro-session.ts *To Do*
+├── app.component.ts
+├── app.module.ts
+```
+
+---
+
+## 🛠️ Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/your-username/angular-pomodoro-timer.git
+cd angular-pomodoro-timer
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the development server
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open `http://localhost:4200` in your browser.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🎨 Themes
 
-```bash
-ng generate component component-name
-```
+You can switch between:
+- 🎮 **Pixel Theme**: Retro, arcade-inspired look with 8-bit font and colors
+- 🧼 **Clean Theme**: Minimal light theme inspired by modern apps
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Your selected theme is saved to localStorage and persists across sessions.
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## ✅ Roadmap
 
-To build the project run:
+- [x] Timer control (start/pause/reset)
+- [ ] Add Home Page
+- [ ] Task naming
+- [ ] History log
+- [ ] Theme switching
+- [ ] Sound and visual alerts
+- [ ] PWA support
+- [ ] Daily/weekly progress charts
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
