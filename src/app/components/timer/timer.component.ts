@@ -1,63 +1,58 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TimerService } from '../../services/timer.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-timer',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './timer.component.html',
-  styleUrls: ['./timer.component.css']
+  styleUrls: ['./timer.component.css'],
 })
 export class TimerComponent {
-  timeLeft: number = 25 * 60; // 25 minutes in seconds
-  totalTime: number = 25 * 60; // Total time for the timer
-  timerInterval: any = null;
-  isRunning: boolean = false;
+  timeLeft$!: Observable<number>;
+  isRunning$!: Observable<boolean>;
+
+  private radius: number = 45; // Radius of the circle
+  circumference: number = 2 * Math.PI * this.radius; // Calculate circumference
+  progressOffset: number = 0; // Initial offset for the progress circle
+
+  constructor(private timerService: TimerService) {}
+
+  ngOnInit(): void {
+    this.timeLeft$ = this.timerService.timeLeft$;
+    this.isRunning$ = this.timerService.isRunning$;
+
+    // Subscribe to timeLeft$ to update progressOffset dynamically
+    this.timeLeft$.subscribe((timeLeft) => {
+      this.updateProgress(timeLeft);
+    });
+  }
+  private updateProgress(timeLeft: number): void {
+    const totalTime = this.timerService.totalTime; // Assuming totalTime is defined in TimerService
+    this.progressOffset =
+      this.circumference - (timeLeft / totalTime) * this.circumference;
+  }
 
   get formattedTime(): string {
-    const minutes: number = Math.floor(this.timeLeft / 60);
-    const seconds: number = this.timeLeft % 60;
+    const minutes: number = Math.floor(this.timerService.timeLeft / 60);
+    const seconds: number = this.timerService.timeLeft % 60;
     return `${this.padZero(minutes)}:${this.padZero(seconds)}`;
   }
-
-  get circumference(): number {
-    const radius = 45; // Radius of the circle
-    return 2 * Math.PI * radius;
-  }
-
-  get progressOffset(): number {
-    return this.circumference - (this.timeLeft / this.totalTime) * this.circumference;
-  }
-
   private padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
   }
 
   startTimer(): void {
-    if (!this.isRunning) {
-      this.isRunning = true;
-      this.timerInterval = setInterval(() => {
-        if (this.timeLeft > 0) {
-          this.timeLeft--;
-        } else {
-          this.stopTimer();
-          alert("Time's up!");
-        }
-      }, 1000); // Run every second
-    }
+    this.timerService.startTimer();
   }
 
   stopTimer(): void {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-      this.timerInterval = null;
-      this.isRunning = false;
-    }
+    this.timerService.stopTimer();
   }
 
   resetTimer(): void {
-    this.stopTimer();
-    this.timeLeft = this.totalTime; // Reset to the total time
-  }
-
-  ngOnDestroy(): void {
-    this.stopTimer();
+    this.timerService.resetTimer();
   }
 }
